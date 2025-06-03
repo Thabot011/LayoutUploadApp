@@ -6,6 +6,6 @@ namespace LayoutUploadApp.Services
     public interface IFileService
     {
         Task DownloadTemplate();
-        Task<List<SaveUnitLayoutRequest>> UploadTemplate(string folderPath, List<string> propertiesIds, List<string> unitsIds);
+        Task<List<SaveUnitLayoutRequest>> UploadTemplate(string folderPath, List<string> propertiesIds, List<string> unitsIds, ProgressBar progressBar);
     }
 }

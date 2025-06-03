@@ -14,8 +14,6 @@ namespace LayoutUploadApp
             InitializeComponent();
         }
 
-
-
         protected override async void OnLoad(EventArgs e)
         {
             await GlobalSetting.ProgressLoading(UploadLayoutProgress);
@@ -44,7 +42,7 @@ namespace LayoutUploadApp
             else
             {
                 await GlobalSetting.ProgressLoading(UploadLayoutProgress);
-                var unitsUploaded = await _fileService.UploadTemplate(LayoutFolderTxt.Text, _lookupService.GetLookups().Select(x => x.Id.ToString()).ToList(), _lookupService.GetLookups().Select(x => x.Name).ToList());
+                var unitsUploaded = await _fileService.UploadTemplate(LayoutFolderTxt.Text, _lookupService.GetLookups().Select(x => x.Id.ToString()).ToList(), _lookupService.GetLookups().Select(x => x.Name).ToList(),UploadLayoutProgress);
                 await GlobalSetting.ProgressStop(UploadLayoutProgress, UploadBtn);
                 if (unitsUploaded == null || !unitsUploaded.Any())
                 {

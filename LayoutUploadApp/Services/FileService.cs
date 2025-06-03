@@ -57,7 +57,7 @@ namespace LayoutUploadApp.Services
             _xLWorkbook.SaveAs("LayoutSheet.xlsx");
         }
 
-        public async Task<List<SaveUnitLayoutRequest>> UploadTemplate(string folderPath, List<string> propertiesIds, List<string> unitsIds)
+        public async Task<List<SaveUnitLayoutRequest>> UploadTemplate(string folderPath, List<string> propertiesIds, List<string> unitsIds, ProgressBar progressBar)
         {
             _xLWorkbook = new XLWorkbook("LayoutSheet.xlsx");
             var worksheet = _xLWorkbook.Worksheet("Layout template");
@@ -74,13 +74,21 @@ namespace LayoutUploadApp.Services
                 var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
                 await containerClient.CreateIfNotExistsAsync();
                 List<SaveUnitLayoutRequest> UploadedUnits = new List<SaveUnitLayoutRequest>();
+                progressBar.Minimum = 0;
+                progressBar.Maximum = filePathes.Count;
+                progressBar.Value = 0;
                 await Parallel.ForEachAsync(filePathes, async (filePath, c) =>
                 {
                     string fileName = Path.GetFileName(filePath);
-                    BlobClient blobClient = containerClient.GetBlobClient(fileName);
+                    var row = rows.FirstOrDefault(r => r.Cell(3).GetString() == fileName);
+                    string blobName = $"DeveloperName/{DateTime.Now.Year}/Units/{row.Cell(1).GetString()}/UnitLayout/{fileName}";
+                    BlobClient blobClient = containerClient.GetBlobClient(blobName);
                     using FileStream fileStream = File.OpenRead(filePath);
                     var result = await blobClient.UploadAsync(fileStream, overwrite: true);
-                    var row = rows.FirstOrDefault(r => r.Cell(3).GetString() == fileName);
+                    await progressBar.InvokeAsync(() =>
+                     {
+                         progressBar.Value++;
+                     });
                     UploadedUnits.Add(new SaveUnitLayoutRequest
                     {
                         FileName = fileName,
