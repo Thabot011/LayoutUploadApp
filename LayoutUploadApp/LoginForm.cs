@@ -51,7 +51,7 @@ namespace LayoutUploadApp
                     }
                     else
                     {
-                        MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Invalid username,password or identitfier.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
