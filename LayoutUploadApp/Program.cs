@@ -32,7 +32,7 @@ namespace LayoutUploadApp
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
                 // Get the startup form from the container
-                var loginForm = serviceProvider.GetRequiredService<UploadLayoutFrom>();
+                var loginForm = serviceProvider.GetRequiredService<LoginForm>();
                 Application.Run(loginForm);
             }
         }

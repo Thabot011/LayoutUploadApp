@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AkaratiCheckScanner.Services
 {
-    public class AuthService:IAuthService
+    public class AuthService : IAuthService
     {
         private readonly HttpClient _httpClient;
 
@@ -20,13 +20,13 @@ namespace AkaratiCheckScanner.Services
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", GlobalSetting.AuthToken);
         }
 
-        public async Task<string> LoginAsync(string username, string password)
+        public async Task<string> LoginAsync(string username, string password, string identifier)
         {
             var request = new
             {
                 username,
                 password,
-                identifier = "mL5WislMnggrmNaw4/h3pg=="
+                identifier
             };
 
             string jsonData = JsonConvert.SerializeObject(request);

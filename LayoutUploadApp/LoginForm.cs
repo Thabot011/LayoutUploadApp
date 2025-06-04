@@ -13,6 +13,18 @@ namespace LayoutUploadApp
             InitializeComponent();
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Settings.Default.Identifier))
+            {
+                IdentitfierTxt.Show();
+            }
+            else
+            {
+                IdentitfierTxt.Hide();
+            }
+        }
+
         private async void LoginBtn_ClickAsync(object sender, EventArgs e)
         {
             LoginErrorProvider.Clear();
@@ -20,15 +32,22 @@ namespace LayoutUploadApp
             {
                 try
                 {
-                  await GlobalSetting.ProgressLoading(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt);
-                    var token = await _authService.LoginAsync(UserNameTxt.Text, PasswordTxt.Text);
+                    await GlobalSetting.ProgressLoading(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt, IdentitfierTxt);
+
+                    string identifier = IdentitfierTxt.Visible ? IdentitfierTxt.Text : Settings.Default.Identifier;
+
+                    var token = await _authService.LoginAsync(UserNameTxt.Text, PasswordTxt.Text, identifier);
                     if (!string.IsNullOrEmpty(token))
                     {
                         GlobalSetting.AuthToken = token;
                         this.Hide();
                         uploadLayoutFrom.Show();
                         uploadLayoutFrom.FormClosed += (s, args) => this.Close();
-
+                        if (!string.IsNullOrEmpty(IdentitfierTxt.Text))
+                        {
+                            Settings.Default.Identifier = IdentitfierTxt.Text;
+                            Settings.Default.Save();
+                        }
                     }
                     else
                     {
@@ -38,11 +57,11 @@ namespace LayoutUploadApp
                 catch (Exception ex)
                 {
                     MessageBox.Show("An error happened please try again later", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                 await GlobalSetting.ProgressStop(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt);
+                    await GlobalSetting.ProgressStop(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt, IdentitfierTxt);
                 }
                 finally
                 {
-                  await GlobalSetting.ProgressStop(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt);
+                    await GlobalSetting.ProgressStop(LoginProgress, LoginBtn, UserNameTxt, PasswordTxt, IdentitfierTxt);
                 }
             }
         }
@@ -58,6 +77,11 @@ namespace LayoutUploadApp
             if (string.IsNullOrWhiteSpace(PasswordTxt.Text))
             {
                 LoginErrorProvider.SetError(PasswordTxt, "Password is required");
+                isValid = false;
+            }
+            if (IdentitfierTxt.Visible && string.IsNullOrEmpty(IdentitfierTxt.Text))
+            {
+                LoginErrorProvider.SetError(IdentitfierTxt, "Identitfier is required");
                 isValid = false;
             }
             return isValid;

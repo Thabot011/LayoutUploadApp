@@ -35,6 +35,7 @@
             LoginBtn = new ReaLTaiizor.Controls.MaterialButton();
             PasswordTxt = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             LoginErrorProvider = new ErrorProvider(components);
+            IdentitfierTxt = new ReaLTaiizor.Controls.MaterialMaskedTextBox();
             LoginCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LoginErrorProvider).BeginInit();
             SuspendLayout();
@@ -42,6 +43,7 @@
             // LoginCard
             // 
             LoginCard.BackColor = Color.FromArgb(255, 255, 255);
+            LoginCard.Controls.Add(IdentitfierTxt);
             LoginCard.Controls.Add(LoginProgress);
             LoginCard.Controls.Add(UserNameTxt);
             LoginCard.Controls.Add(LoginBtn);
@@ -150,7 +152,7 @@
             PasswordTxt.Hint = "Password";
             PasswordTxt.InsertKeyMode = InsertKeyMode.Default;
             PasswordTxt.LeadingIcon = null;
-            PasswordTxt.Location = new Point(296, 204);
+            PasswordTxt.Location = new Point(296, 160);
             PasswordTxt.Mask = "";
             PasswordTxt.MaxLength = 32767;
             PasswordTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
@@ -181,6 +183,50 @@
             // 
             LoginErrorProvider.ContainerControl = this;
             // 
+            // IdentitfierTxt
+            // 
+            IdentitfierTxt.AllowPromptAsInput = true;
+            IdentitfierTxt.Anchor = AnchorStyles.None;
+            IdentitfierTxt.AnimateReadOnly = false;
+            IdentitfierTxt.AsciiOnly = false;
+            IdentitfierTxt.BackgroundImageLayout = ImageLayout.None;
+            IdentitfierTxt.BeepOnError = false;
+            IdentitfierTxt.CutCopyMaskFormat = MaskFormat.IncludeLiterals;
+            IdentitfierTxt.Depth = 0;
+            IdentitfierTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            IdentitfierTxt.HelperText = "Identitfier";
+            IdentitfierTxt.HidePromptOnLeave = false;
+            IdentitfierTxt.HideSelection = true;
+            IdentitfierTxt.Hint = "Identitfier";
+            IdentitfierTxt.InsertKeyMode = InsertKeyMode.Default;
+            IdentitfierTxt.LeadingIcon = null;
+            IdentitfierTxt.Location = new Point(296, 242);
+            IdentitfierTxt.Mask = "";
+            IdentitfierTxt.MaxLength = 32767;
+            IdentitfierTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            IdentitfierTxt.Name = "IdentitfierTxt";
+            IdentitfierTxt.PasswordChar = '\0';
+            IdentitfierTxt.PrefixSuffixText = null;
+            IdentitfierTxt.PromptChar = '_';
+            IdentitfierTxt.ReadOnly = false;
+            IdentitfierTxt.RejectInputOnFirstFailure = false;
+            IdentitfierTxt.ResetOnPrompt = true;
+            IdentitfierTxt.ResetOnSpace = true;
+            IdentitfierTxt.RightToLeft = RightToLeft.No;
+            IdentitfierTxt.SelectedText = "";
+            IdentitfierTxt.SelectionLength = 0;
+            IdentitfierTxt.SelectionStart = 0;
+            IdentitfierTxt.ShortcutsEnabled = true;
+            IdentitfierTxt.Size = new Size(312, 48);
+            IdentitfierTxt.SkipLiterals = true;
+            IdentitfierTxt.TabIndex = 4;
+            IdentitfierTxt.TabStop = false;
+            IdentitfierTxt.TextAlign = HorizontalAlignment.Left;
+            IdentitfierTxt.TextMaskFormat = MaskFormat.IncludeLiterals;
+            IdentitfierTxt.TrailingIcon = null;
+            IdentitfierTxt.UseSystemPasswordChar = false;
+            IdentitfierTxt.ValidatingType = null;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -202,5 +248,6 @@
         private ReaLTaiizor.Controls.MaterialMaskedTextBox PasswordTxt;
         private ErrorProvider LoginErrorProvider;
         private ProgressBar LoginProgress;
+        private ReaLTaiizor.Controls.MaterialMaskedTextBox IdentitfierTxt;
     }
 }
